@@ -16,7 +16,7 @@
                 <th class="text-right"><strong>Taxes</strong></th>
              </t>
          </xpath>
-<!-- another table with taxes -->
+<!-- another table with taxes that are other fields from stock_picking as sum of stock_move_line s -->
         <xpath expr="//table[@name='stock_move_line_table']" position="after">
             <t t-if="o.valued and o.sale_id and o.move_line_ids and o.state=='done'">
                 <table class="table table-sm mt32">
