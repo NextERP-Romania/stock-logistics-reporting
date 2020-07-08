@@ -92,11 +92,16 @@ class StockMoveLine(models.Model):
             if line_key not in aggregated_move_lines:
                 raise ValidationError(f"some error line_key={line_key}")
             else:
-                aggregated_move_lines[line_key]['sale_price_subtotal'] = move_line.sale_price_subtotal
-                aggregated_move_lines[line_key]['sale_tax_description'] = move_line.sale_tax_description
-                aggregated_move_lines[line_key]['sale_discount'] = move_line.sale_discount
-                aggregated_move_lines[line_key]['sale_price_unit'] = move_line.sale_price_unit
-                aggregated_move_lines[line_key]['sale_price_tax'] = move_line.sale_price_tax
+                if 'sale_price_unit' not in aggregated_move_lines[line_key]: 
+                    aggregated_move_lines[line_key]['sale_price_unit'] = move_line.sale_price_unit
+                    aggregated_move_lines[line_key]['sale_tax_description'] = move_line.sale_tax_description
+                    aggregated_move_lines[line_key]['sale_price_subtotal'] = move_line.sale_price_subtotal
+                    aggregated_move_lines[line_key]['sale_discount'] = move_line.sale_discount
+                    aggregated_move_lines[line_key]['sale_price_tax'] = move_line.sale_price_tax
+                else:
+                    aggregated_move_lines[line_key]['sale_price_subtotal'] += move_line.sale_price_subtotal
+                    aggregated_move_lines[line_key]['sale_discount'] += move_line.sale_discount
+                    aggregated_move_lines[line_key]['sale_price_tax'] += move_line.sale_price_tax
                 
         return aggregated_move_lines
 
