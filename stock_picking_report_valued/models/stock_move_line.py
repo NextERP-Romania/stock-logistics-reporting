@@ -104,3 +104,4 @@ class StockMoveLine(models.Model):
                     aggregated_move_lines[line_key]['sale_price_tax'] += move_line.sale_price_tax
                 
         return aggregated_move_lines
+
